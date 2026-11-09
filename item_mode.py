@@ -1,8 +1,17 @@
 import game_framework
+import ball
 import game_world
+import play_mode
 from pico2d import *
 
 image = None
+
+# 숫자 줄과 숫자 패드의 0, 1, 2 키를 각각 공 없음, 작은 공, 큰 공에 대응
+ITEM_KEYS = {
+    SDLK_0: None, SDLK_KP_0: None,
+    SDLK_1: ball.SMALL, SDLK_KP_1: ball.SMALL,
+    SDLK_2: ball.BIG, SDLK_KP_2: ball.BIG,
+}
 
 
 def init():
@@ -34,6 +43,11 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.pop_mode()
+            return  # 남은 이벤트로 한 번 더 pop 되지 않게 바로 나감
+        elif event.type == SDL_KEYDOWN and event.key in ITEM_KEYS:
+            play_mode.boy.item = ITEM_KEYS[event.key]
+            game_framework.pop_mode()
+            return
 
 
 def pause():
