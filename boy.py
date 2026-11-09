@@ -54,6 +54,12 @@ class Boy:
         new_ball = Ball(self.x, self.y, self.face_dir * 10, self.item)
         game_world.add_object(new_ball)
 
+    def release_keys(self):
+        self.pressed_keys.clear()
+        if self.state == 'RUN':
+            self.dir = 0
+            self.stop_run()
+
     def handle_event(self, event):
         if (event.type == SDL_KEYDOWN and
                 event.key == SDLK_SPACE and
