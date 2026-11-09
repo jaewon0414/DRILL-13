@@ -41,7 +41,8 @@ def handle_events():
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+        elif event.type == SDL_KEYDOWN and event.key in (SDLK_ESCAPE, SDLK_i):
+            # ESC나 선택 창을 연 i 키를 다시 누르면 고르지 않고 닫음
             game_framework.pop_mode()
             return  # 남은 이벤트로 한 번 더 pop 되지 않게 바로 나감
         elif event.type == SDL_KEYDOWN and event.key in ITEM_KEYS:
