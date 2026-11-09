@@ -1,30 +1,26 @@
 from pico2d import *
+import game_framework
 import game_world
+import title_mode
 from boy import Boy
 from grass import Grass
 
 boy = None
-running = True
 
 
 def handle_events():
-    global running
-
     event_list = get_events()
     for event in event_list:
         if event.type == SDL_QUIT:
-            running = False
+            game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            running = False
+            game_framework.change_mode(title_mode)
         else:
             boy.handle_event(event)
 
 
 def init():
     global boy
-    global running
-
-    running = True
 
     grass = Grass()
     game_world.add_object(grass, 0)
@@ -44,4 +40,13 @@ def render():
 
 
 def finish():
+    # 다시 들어왔을 때 객체가 겹치지 않도록 월드를 비움
+    game_world.clear()
+
+
+def pause():
+    pass
+
+
+def resume():
     pass
