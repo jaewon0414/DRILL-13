@@ -1,4 +1,5 @@
 import game_framework
+import title_mode
 from pico2d import *
 
 image = None
@@ -22,7 +23,7 @@ def update():
 
     if get_time() - logo_start_time >= 2.0:
         logo_start_time = get_time()
-        game_framework.quit()
+        game_framework.change_mode(title_mode)
 
 
 def render():
@@ -34,3 +35,11 @@ def render():
 def handle_events():
     # 이벤트 큐를 비워서 창이 응답 없음 상태가 되지 않게 함
     events = get_events()
+
+
+def pause():
+    pass
+
+
+def resume():
+    pass
