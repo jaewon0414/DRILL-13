@@ -6,6 +6,7 @@ from sdl2 import (SDL_KEYDOWN, SDL_KEYUP, SDLK_LEFT, SDLK_RIGHT,
 from transitions import Machine
 
 import game_world
+import ball
 from ball import Ball
 
 
@@ -18,6 +19,7 @@ class Boy:
         self.dir = 0
         self.face_dir = 1
         self.pressed_keys = set()
+        self.item = ball.SMALL  # None이면 공 없음
 
         self.machine = Machine(
             model=self,
@@ -47,8 +49,10 @@ class Boy:
         self.frame = 0
 
     def fire_ball(self):
-        ball = Ball(self.x, self.y, self.face_dir * 10)
-        game_world.add_object(ball)
+        if self.item is None:
+            return
+        new_ball = Ball(self.x, self.y, self.face_dir * 10, self.item)
+        game_world.add_object(new_ball)
 
     def handle_event(self, event):
         if (event.type == SDL_KEYDOWN and
